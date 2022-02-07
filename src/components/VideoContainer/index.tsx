@@ -1,9 +1,9 @@
 import { Wrapper } from "./VideoContainer.styles";
-import Video from "../Video";
+import Video from "components/Video";
 
 function VideoContainer() {
   return (
-    <Wrapper>
+    <Wrapper data-testid="video-container">
       <Video />
     </Wrapper>
   );

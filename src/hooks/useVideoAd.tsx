@@ -41,7 +41,6 @@ function useVideoAd(videoRef: React.RefObject<HTMLVideoElement>) {
 
   return {
     muted,
-    // videoVisibilityPercentage,
     toggleMute,
     play,
     pause,
