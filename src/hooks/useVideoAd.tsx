@@ -1,21 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
-import useScroll from "./useScroll";
 import { getElementVisibilityPercentage } from "utility";
 
 function useVideoAd(videoRef: React.RefObject<HTMLVideoElement>) {
   const [muted, setMuted] = useState(true);
 
-  //
-  const scroll = useScroll();
-
-  const videoVisibilityPercentage = getElementVisibilityPercentage(
-    videoRef.current!
-  );
-
-  function toggleMute() {
+  const toggleMute = () => {
     setMuted(!muted);
     (videoRef.current! as HTMLVideoElement).muted = !muted;
-  }
+  };
 
   const play = useCallback(() => {
     let video = videoRef.current! as HTMLVideoElement;
@@ -33,14 +25,23 @@ function useVideoAd(videoRef: React.RefObject<HTMLVideoElement>) {
     }
   }, [videoRef]);
 
-  useEffect(() => {
+  const handleVideoPlayPause = useCallback(() => {
+    let videoVisibilityPercentage = getElementVisibilityPercentage(
+      videoRef.current!
+    );
     videoVisibilityPercentage >= 50 ? play() : pause();
-  }, [videoVisibilityPercentage, play, pause]);
+  }, [videoRef, play, pause]);
+
+  useEffect(() => {
+    document.addEventListener("scroll", handleVideoPlayPause);
+    return () => {
+      document.removeEventListener("scroll", handleVideoPlayPause);
+    };
+  }, [handleVideoPlayPause]);
 
   return {
     muted,
-    scroll,
-    videoVisibilityPercentage,
+    // videoVisibilityPercentage,
     toggleMute,
     play,
     pause,

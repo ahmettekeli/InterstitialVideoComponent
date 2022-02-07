@@ -38,9 +38,9 @@ export function getDurationPercentage(video: HTMLVideoElement): number {
 }
 
 export function handleVideoQurters(percent: number) {
-  console.log("Video has reached ", percent, "%");
+  console.log(`Video has reached ${percent} %`);
 }
 
 export function handle2SecWatch() {
-  console.log("Video has been watched for at least 2 seconds");
+  console.log("Video has been watched for at least 2 seconds.");
 }

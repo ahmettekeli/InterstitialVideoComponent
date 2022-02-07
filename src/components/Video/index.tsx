@@ -14,10 +14,11 @@ function Video() {
   const [thresholdReached, setThresholdReached] = useState(false);
   const videoRef = useRef(null);
   const { muted, toggleMute } = useVideoAd(videoRef);
+  const videoUrl = "https://cdn.yoc.com/ad/demo/airbnb.mp4";
 
   function onVideoTimeUpdate(e: React.ChangeEvent<HTMLVideoElement>) {
     let percentage = getDurationPercentage(e.target as HTMLVideoElement);
-    let currentTime = e.target.currentTime;
+    let { currentTime } = e.target;
     if (
       percentage === 25 ||
       percentage === 50 ||
@@ -33,19 +34,17 @@ function Video() {
   }
 
   return (
-    <Wrapper>
-      <Controls>
-        <div onClick={toggleMute}>
-          {muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
-        </div>
+    <Wrapper data-testid="video">
+      <Controls data-testid="mute" onClick={toggleMute}>
+        {muted ? <VolumeOffIcon /> : <VolumeUpIcon />}
       </Controls>
       <video
         muted
         playsInline
-        loop //wasn't sure if this is expected but added anyway
+        loop //I wasn't sure if this is expected but added anyway
         ref={videoRef}
         onTimeUpdate={onVideoTimeUpdate}
-        src="https://cdn.yoc.com/ad/demo/airbnb.mp4"
+        src={videoUrl}
       />
     </Wrapper>
   );
